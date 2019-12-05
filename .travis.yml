@@ -1,0 +1,12 @@
+language: go
+
+go:
+  - "1.11.x"
+
+env:
+  - GO111MODULE=on GOFLAGS=-mod=readonly
+
+install: true
+
+script:
+    - go test -v .
