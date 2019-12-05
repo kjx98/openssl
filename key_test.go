@@ -260,6 +260,7 @@ func TestSignED25519(t *testing.T) {
 	if !ed25519_support {
 		t.SkipNow()
 	}
+	t.Log("test real ED25519 sign")
 
 	t.Parallel()
 
@@ -282,6 +283,46 @@ func TestSignED25519(t *testing.T) {
 		}
 
 	})
+}
+
+func BenchmarkEd25519Verify(b *testing.B) {
+	if !ed25519_support {
+		b.SkipNow()
+	}
+	key, err := GenerateED25519Key()
+	if err != nil {
+		b.Fatal(err)
+	}
+	data := []byte("the quick brown fox jumps over the lazy dog")
+	sig, err := key.SignPKCS1v15(nil, data)
+	if err != nil {
+		b.Fatal(err)
+	}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		err = key.VerifyPKCS1v15(nil, data, sig)
+		if err != nil {
+			b.Fatal(err)
+		}
+	}
+}
+
+func BenchmarkEd25519Sign(b *testing.B) {
+	if !ed25519_support {
+		b.SkipNow()
+	}
+	key, err := GenerateED25519Key()
+	if err != nil {
+		b.Fatal(err)
+	}
+	data := []byte("the quick brown fox jumps over the lazy dog")
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_, err := key.SignPKCS1v15(nil, data)
+		if err != nil {
+			b.Fatal(err)
+		}
+	}
 }
 
 func TestMarshalEC(t *testing.T) {
