@@ -1,6 +1,7 @@
-# OpenSSL bindings for Go
+# OpenSSL crypto bindings for Go
 
-Please see http://godoc.org/github.com/spacemonkeygo/openssl for more info
+forked from github.com/spacemonkeygo/openssl
+Please see http://godoc.org/github.com/kjx98/openssl for more info
 
 ### License
 

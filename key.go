@@ -28,6 +28,19 @@ var ( // some (effectively) constants for tests to refer to
 	ed25519_support = C.X_ED25519_SUPPORT != 0
 )
 
+// EllipticCurve repesents the ASN.1 OID of an elliptic curve.
+// see https://www.openssl.org/docs/apps/ecparam.html for a list of implemented curves.
+type EllipticCurve int
+
+const (
+	// P-256: X9.62/SECG curve over a 256 bit prime field
+	Prime256v1 EllipticCurve = C.NID_X9_62_prime256v1
+	// P-384: NIST/SECG curve over a 384 bit prime field
+	Secp384r1 EllipticCurve = C.NID_secp384r1
+	// P-521: NIST/SECG curve over a 521 bit prime field
+	Secp521r1 EllipticCurve = C.NID_secp521r1
+)
+
 type Method *C.EVP_MD
 
 var (
